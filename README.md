@@ -104,6 +104,7 @@ php artisan db:seed
 ```bash
 php artisan serve
 ```
+Or use Herd/Valet for automatic domain routing (e.g., http://book-library-api.test)
 
 The API will be available at `http://book-library-api.test`
 
