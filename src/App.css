@@ -36,3 +36,25 @@
     transform: rotate(360deg);
   }
 }
+
+.navbar {
+  background-color: #333;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  margin: 0 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.nav-link:hover {
+  background-color: #555;
+  border-radius: 4px;
+}
+
+.main-content {
+  padding: 0 2rem;
+}
