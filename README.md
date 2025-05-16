@@ -1,70 +1,193 @@
-# Getting Started with Create React App
+# Book Library Management System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack web application for managing a book library, built with React and Laravel. This project demonstrates a modern web application with a React frontend and Laravel REST API backend.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- View list of all books
+- View detailed information about each book
+- Add new books to the library
+- Edit existing book information
+- Delete books from the library
+- Responsive design
+- Form validation
+- Success/Error notifications
+- Confirmation dialogs for delete operations
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Frontend
+- React 18
+- React Router for navigation
+- Axios for API calls
+- CSS for styling
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Backend
+- Laravel 12
+- RESTful API
+- MySQL Database
 
-### `npm test`
+## Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js (v14 or higher)
+- PHP 8.1 or higher
+- Composer
+- MySQL
+- Herd (for local development)
 
-### `npm run build`
+## Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Frontend Setup
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd book-library-frontend
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Install dependencies:
+```bash
+npm install
+```
 
-### `npm run eject`
+3. Start the development server:
+```bash
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+The frontend will be available at `http://localhost:3000`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Backend Setup
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. Navigate to the backend directory:
+```bash
+cd ../book-library-api
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2. Install PHP dependencies:
+```bash
+composer install
+```
 
-## Learn More
+3. Copy the environment file:
+```bash
+cp .env.example .env
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4. Configure your database in the `.env` file:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=book_library
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
 
-### Code Splitting
+5. Generate application key:
+```bash
+php artisan key:generate
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+6. Run migrations:
+```bash
+php artisan migrate
+```
 
-### Analyzing the Bundle Size
+7. Seed the database (optional):
+```bash
+php artisan db:seed
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+8. Start the Laravel development server:
+```bash
+php artisan serve
+```
 
-### Making a Progressive Web App
+The API will be available at `http://book-library-api.test`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## API Endpoints
 
-### Advanced Configuration
+- `GET    /api/books` - List all books
+- `GET    /api/books/{id}` - Get a specific book
+- `POST   /api/books` - Create a new book
+- `PUT    /api/books/{id}` - Update a book
+- `DELETE /api/books/{id}` - Delete a book
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Request/Response Format
 
-### Deployment
+### Create/Update Book Request
+```json
+{
+    "title": "Book Title",
+    "author": "Author Name",
+    "publication_year": 2024
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Book Response
+```json
+{
+    "id": 1,
+    "title": "Book Title",
+    "author": "Author Name",
+    "publication_year": 2024,
+    "created_at": "2024-03-16T12:00:00.000000Z",
+    "updated_at": "2024-03-16T12:00:00.000000Z"
+}
+```
 
-### `npm run build` fails to minify
+## Validation Rules
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Title: Required, string, max 255 characters
+- Author: Required, string, max 255 characters
+- Publication Year: Required, integer between 1500 and current year
+
+## Project Structure
+
+### Frontend
+```
+src/
+├── components/         # Reusable UI components
+│   ├── BookList.jsx
+│   ├── BookForm.jsx
+│   ├── BookDetails.jsx
+│   ├── ConfirmationDialog.jsx
+│   └── Notification.jsx
+├── pages/             # Page components
+│   ├── HomePage.jsx
+│   ├── BookDetailsPage.jsx
+│   ├── EditBookPage.jsx
+│   └── CreateBookPage.jsx
+├── services/          # API service
+│   └── api.js
+├── context/           # React context
+│   └── NotificationContext.jsx
+└── App.jsx
+```
+
+### Backend
+```
+app/
+├── Http/
+│   ├── Controllers/
+│   │   └── BookController.php
+│   └── Middleware/
+├── Models/
+│   └── Book.php
+└── routes/
+    └── api.php
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details

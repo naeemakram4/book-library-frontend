@@ -49,6 +49,14 @@
   margin: 0 1rem;
   padding: 0.5rem 1rem;
 }
+.nav-link-add-book {
+  color: white;
+  text-decoration: none;
+  margin: 0 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #28a745;
+  border-radius: 4px;
+}
 
 .nav-link:hover {
   background-color: #555;

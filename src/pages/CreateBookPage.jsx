@@ -1,12 +1,8 @@
 import React from 'react';
+import BookForm from '../components/BookForm';
 
 const CreateBookPage = () => {
-  return (
-    <div className="create-book-page">
-      <h2>Add New Book</h2>
-      {/* We'll implement the create form later */}
-    </div>
-  );
+  return <BookForm />;
 };
 
 export default CreateBookPage; 

@@ -1,46 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useBooks } from '../hooks/useBooks';
+import ConfirmationDialog from './ConfirmationDialog';
 import './BookList.css';
+import { useNotification } from '../context/NotificationContext';
 
 const BookList = () => {
-  // State to store the list of books
-  const [books, setBooks] = useState([]);
-  // State to handle loading state
-  const [loading, setLoading] = useState(true);
-  // State to handle any errors
-  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const { books, loading, error, deleteBook } = useBooks();
+  const [deleteDialog, setDeleteDialog] = useState({ isOpen: false, bookId: null });
+  const { showNotification } = useNotification();
 
-  // useEffect hook to fetch books when component mounts
-  useEffect(() => {
-    // This is a placeholder for now - we'll implement the actual API call later
-    const fetchBooks = async () => {
-      try {
-        setLoading(true);
-        // TODO: Replace with actual API call
-        const response = await fetch('http://localhost:8000/api/books');
-        const data = await response.json();
-        setBooks(data);
-      } catch (err) {
-        setError('Failed to fetch books');
-        console.error('Error fetching books:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const handleDeleteClick = (id) => {
+    setDeleteDialog({ isOpen: true, bookId: id });
+  };
 
-    fetchBooks();
-  }, []);
+  const handleDeleteConfirm = async () => {
+    try {
+      await deleteBook(deleteDialog.bookId);
+      setDeleteDialog({ isOpen: false, bookId: null });
+      showNotification('Book deleted successfully!');
+    } catch (err) {
+      showNotification('Failed to delete book', 'error');
+    }
+  };
 
-  // Show loading state
   if (loading) {
-    return <div>Loading books...</div>;
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p>Loading books...</p>
+      </div>
+    );
   }
 
-  // Show error state
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="error">Error: {error}</div>;
   }
 
-  // Show the list of books
   return (
     <div className="book-list">
       <h2>Books</h2>
@@ -60,13 +57,13 @@ const BookList = () => {
               <td>{book.author}</td>
               <td>{book.publication_year}</td>
               <td>
-                <button onClick={() => {/* TODO: Implement view details */}}>
+                <button onClick={() => navigate(`/books/${book.id}`)}>
                   View
                 </button>
-                <button onClick={() => {/* TODO: Implement edit */}}>
+                <button onClick={() => navigate(`/books/${book.id}/edit`)}>
                   Edit
                 </button>
-                <button onClick={() => {/* TODO: Implement delete */}}>
+                <button onClick={() => handleDeleteClick(book.id)}>
                   Delete
                 </button>
               </td>
@@ -74,6 +71,13 @@ const BookList = () => {
           ))}
         </tbody>
       </table>
+      <ConfirmationDialog
+        isOpen={deleteDialog.isOpen}
+        onClose={() => setDeleteDialog({ isOpen: false, bookId: null })}
+        onConfirm={handleDeleteConfirm}
+        title="Delete Book"
+        message="Are you sure you want to delete this book? This action cannot be undone."
+      />
     </div>
   );
 };
