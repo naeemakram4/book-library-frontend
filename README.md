@@ -59,7 +59,7 @@ The frontend will be available at `http://localhost:3000`
 
 ### Backend Setup
 
-1. Navigate to the backend directory:
+1. Navigate to the backend directory or clone it from here https://github.com/naeemakram4/book-library-api:
 ```bash
 cd ../book-library-api
 ```
@@ -80,7 +80,7 @@ cp .env.example .env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=book_library
+DB_DATABASE=book_library_api
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
 ```
@@ -173,21 +173,12 @@ app/
 ├── Http/
 │   ├── Controllers/
 │   │   └── BookController.php
-│   └── Middleware/
 ├── Models/
 │   └── Book.php
 └── routes/
     └── api.php
 ```
 
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ## License
-
 This project is licensed under the MIT License - see the LICENSE file for details
