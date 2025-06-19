@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an axios instance with default config
 const api = axios.create({
-  baseURL: 'http://book-library-api.test',
+  baseURL: 'https://naeem-codes.onrender.com',
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
